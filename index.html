@@ -1,129 +1,344 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lerner CRM | Painel de Controle</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .bg-hubspot-dark { background-color: #2d3e50; }
-        .bg-hubspot-nav { background-color: #1a2632; }
-        .text-hubspot-orange { color: #ff7a59; }
-        .bg-hubspot-orange { background-color: #ff7a59; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel Lerner | Especialista em Logística & Tecnologia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --ink: #0d1117; --gold: #c9a84c; --gold-light: #e8c97e; --cream: #f8f5ef; --mid: #6b7280; --white: #ffffff; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; background: rgba(13,17,23,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .nav-logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .hero { min-height: 100vh; background: var(--ink); display: flex; align-items: center; position: relative; overflow: hidden; padding: 8rem 4rem 4rem; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 60%); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; color: var(--gold); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--gold); }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.75rem); line-height: 1.15; color: var(--white); margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p { color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2.5rem; max-width: 500px; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--gold); color: var(--ink); padding: 0.9rem 2rem; font-weight: 600; font-size: 0.9rem; text-decoration: none; letter-spacing: 0.05em; transition: all 0.25s; }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .hero-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2); padding: 2.5rem; width: 100%; max-width: 380px; margin: 0 auto; }
+  .hero-stat { margin-bottom: 1.5rem; }
+  .hero-stat:last-child { margin-bottom: 0; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--gold); display: block; }
+  .stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.25rem; }
+  .divider-gold { height: 1px; background: rgba(201,168,76,0.2); margin: 1.25rem 0; }
+
+  section { padding: 6rem 4rem; }
+  .section-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; color: var(--gold); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+  .section-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--gold); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.2; margin-bottom: 1.25rem; }
+
+  .sobre { background: var(--white); }
+  .sobre-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .sobre-img-wrap { position: relative; }
+  .sobre-img-placeholder { width: 100%; padding-bottom: 115%; background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); position: relative; overflow: hidden; }
+  .sobre-img-placeholder::after { content: 'GL'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: rgba(201,168,76,0.15); }
+  .sobre-accent { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 6rem; height: 6rem; background: var(--gold); z-index: 2; }
+  .sobre-text p { color: var(--mid); line-height: 1.8; margin-bottom: 1.25rem; }
+  .sobre-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .tag { border: 1px solid rgba(201,168,76,0.4); color: var(--gold); padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; }
+
+  .atuacao { background: var(--cream); }
+  .atuacao-inner { max-width: 1200px; margin: 0 auto; }
+  .atuacao-header { margin-bottom: 3.5rem; }
+  .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .service-card { background: var(--white); padding: 2.25rem 1.75rem; border-bottom: 3px solid transparent; transition: all 0.25s; }
+  .service-card:hover { border-bottom-color: var(--gold); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .card-icon { width: 3rem; height: 3rem; background: rgba(201,168,76,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; font-size: 1.5rem; }
+  .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .service-card p { color: var(--mid); font-size: 0.875rem; line-height: 1.65; }
+
+  .equipe { background: var(--ink); }
+  .equipe .section-title { color: var(--white); }
+  .equipe-inner { max-width: 1200px; margin: 0 auto; }
+  .equipe-header { margin-bottom: 3.5rem; }
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .team-photo { width: 100%; padding-bottom: 120%; background: linear-gradient(135deg, #1a2535, #0d1117); position: relative; }
+  .team-photo-initial { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: rgba(201,168,76,0.3); }
+  .team-info { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-top: 2px solid var(--gold); padding: 1.25rem; }
+  .team-info h3 { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.25rem; }
+  .team-role { color: var(--gold); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .team-bio { color: rgba(255,255,255,0.45); font-size: 0.8rem; line-height: 1.5; }
+
+  .depoimentos { background: var(--white); }
+  .depoimentos-inner { max-width: 1200px; margin: 0 auto; }
+  .dep-header { margin-bottom: 3.5rem; }
+  .dep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .dep-card { padding: 2rem; background: var(--cream); position: relative; }
+  .dep-card::before { content: '\201C'; position: absolute; top: 1rem; left: 1.5rem; font-family: 'Playfair Display', serif; font-size: 5rem; line-height: 1; color: var(--gold); opacity: 0.3; }
+  .dep-text { color: var(--ink); line-height: 1.75; font-size: 0.9rem; margin-bottom: 1.5rem; padding-top: 2rem; }
+  .dep-author { display: flex; align-items: center; gap: 0.75rem; }
+  .dep-avatar { width: 2.5rem; height: 2.5rem; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--ink); font-size: 0.85rem; }
+  .dep-name { font-weight: 600; font-size: 0.875rem; }
+  .dep-role-text { color: var(--mid); font-size: 0.78rem; }
+
+  .contato { background: var(--cream); }
+  .contato-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
+  .contato-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1.25rem; }
+  .contato-info p { color: var(--mid); line-height: 1.75; margin-bottom: 2rem; }
+  .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+  .contact-icon { width: 2.5rem; height: 2.5rem; min-width: 2.5rem; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--ink); }
+  .contact-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+  .contact-val { font-weight: 500; margin-top: 0.15rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .contact-form input, .contact-form textarea { border: 1px solid rgba(0,0,0,0.12); background: var(--white); padding: 0.875rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; width: 100%; }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
+  .contact-form textarea { min-height: 120px; resize: vertical; }
+  .btn-submit { background: var(--ink); color: var(--white); border: none; padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; transition: all 0.25s; align-self: flex-start; }
+  .btn-submit:hover { background: var(--gold); color: var(--ink); }
+
+  footer { background: var(--ink); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(201,168,76,0.15); }
+  .footer-logo { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.1rem; font-weight: 700; }
+  .footer-copy { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+  .footer-socials { display: flex; gap: 1rem; }
+  .social-btn { width: 2rem; height: 2rem; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; transition: all 0.2s; }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+</style>
 </head>
-<body class="bg-gray-100 font-sans flex h-screen overflow-hidden">
+<body>
 
-    <aside class="w-64 bg-hubspot-nav text-gray-300 flex flex-col justify-between hidden md:flex">
+<nav>
+  <div class="nav-logo">★ Gabriel Lerner</div>
+  <ul class="nav-links">
+    <li><a href="#inicio">Início</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#atuacao">Atuação</a></li>
+    <li><a href="#equipe">Equipe</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-grid">
+    <div>
+      <span class="hero-eyebrow">Logística & Tecnologia</span>
+      <h1>Soluções digitais com <em>precisão</em> e resultado.</h1>
+      <p>Desenvolvimento de ferramentas internas, dashboards de gestão e plataformas digitais para logística e frota — com foco em dados reais e impacto operacional.</p>
+      <a href="#contato" class="hero-cta">Fale comigo →</a>
+    </div>
+    <div style="display:flex;justify-content:center;">
+      <div class="hero-card">
+        <div class="hero-stat">
+          <span class="stat-num">8+</span>
+          <div class="stat-label">Filiais monitoradas em tempo real</div>
+        </div>
+        <div class="divider-gold"></div>
+        <div class="hero-stat">
+          <span class="stat-num">100%</span>
+          <div class="stat-label">Dashboards customizados para Cia Verde</div>
+        </div>
+        <div class="divider-gold"></div>
+        <div class="hero-stat">
+          <span class="stat-num">0</span>
+          <div class="stat-label">Dependência de sistemas caros e genéricos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre-inner">
+    <div class="sobre-img-wrap">
+      <div class="sobre-img-placeholder"></div>
+      <div class="sobre-accent"></div>
+    </div>
+    <div class="sobre-text">
+      <span class="section-eyebrow">Sobre mim</span>
+      <h2 class="section-title">Tecnologia aplicada à logística real</h2>
+      <p>Gabriel Lerner é especialista em desenvolvimento de ferramentas digitais para gestão de frota e logística, com atuação direta na Cia Verde Logística. Constrói sistemas internos sob medida — dashboards, rastreadores e plataformas de controle — que substituem planilhas manuais por dados acionáveis.</p>
+      <p>Com foco em soluções de baixo custo e alta eficiência, usa tecnologias como Google Sheets como banco de dados, HTML/JS/CSS para interfaces web e integrações via WhatsApp e automações n8n. Cada ferramenta é pensada para quem opera na ponta.</p>
+      <div class="sobre-tags">
+        <span class="tag">Dashboards de Frota</span>
+        <span class="tag">Google Sheets API</span>
+        <span class="tag">Gestão de Pneus</span>
+        <span class="tag">Automação n8n</span>
+        <span class="tag">Cia Verde Logística</span>
+        <span class="tag">WhatsApp Integration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="atuacao" id="atuacao">
+  <div class="atuacao-inner">
+    <div class="atuacao-header">
+      <span class="section-eyebrow">Especialidades</span>
+      <h2 class="section-title">Atuação nas principais frentes digitais</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="service-card">
+        <div class="card-icon">📊</div>
+        <h3>Dashboards de Gestão</h3>
+        <p>Painéis interativos com filtros, gráficos e tabelas para monitoramento de frota, pneus, orçamentos e KPIs operacionais em tempo real.</p>
+      </div>
+      <div class="service-card">
+        <div class="card-icon">🚚</div>
+        <h3>Controle de Frota</h3>
+        <p>Sistemas de rastreamento de ativos, controle de calibragem, sucateamento e reforma de pneus por filial com histórico completo.</p>
+      </div>
+      <div class="service-card">
+        <div class="card-icon">⚙️</div>
+        <h3>Automação de Processos</h3>
+        <p>Integração de fluxos via n8n, Google Apps Script e WhatsApp — eliminando tarefas manuais repetitivas e acelerando a operação.</p>
+      </div>
+      <div class="service-card">
+        <div class="card-icon">🏗️</div>
+        <h3>Plataformas Digitais</h3>
+        <p>Desenvolvimento de apps web completos com hospedagem zero-cost e escalabilidade real para o mercado brasileiro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="equipe" id="equipe">
+  <div class="equipe-inner">
+    <div class="equipe-header">
+      <span class="section-eyebrow">Time</span>
+      <h2 class="section-title">Conheça quem faz acontecer</h2>
+    </div>
+    <div class="team-grid">
+      <div>
+        <div class="team-photo"><div class="team-photo-initial">GL</div></div>
+        <div class="team-info">
+          <h3>Gabriel Lerner</h3>
+          <div class="team-role">Líder de Tecnologia</div>
+          <p class="team-bio">Responsável pela arquitetura de todas as ferramentas digitais e integração de sistemas.</p>
+        </div>
+      </div>
+      <div>
+        <div class="team-photo"><div class="team-photo-initial">BZ</div></div>
+        <div class="team-info">
+          <h3>Beatriz</h3>
+          <div class="team-role">Parceira Estratégica</div>
+          <p class="team-bio">Suporte na definição de fluxos e experiência de usuário para as plataformas desenvolvidas.</p>
+        </div>
+      </div>
+      <div>
+        <div class="team-photo"><div class="team-photo-initial">OP</div></div>
+        <div class="team-info">
+          <h3>Equipe Operação</h3>
+          <div class="team-role">Cia Verde – Filiais</div>
+          <p class="team-bio">Usuários e validadores dos sistemas em campo — garantindo aderência real às ferramentas.</p>
+        </div>
+      </div>
+      <div>
+        <div class="team-photo"><div class="team-photo-initial">TI</div></div>
+        <div class="team-info">
+          <h3>Suporte TI</h3>
+          <div class="team-role">Infraestrutura</div>
+          <p class="team-bio">Gestão de acessos, Google Workspace e manutenção dos ambientes de dados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="depoimentos">
+  <div class="depoimentos-inner">
+    <div class="dep-header">
+      <span class="section-eyebrow">Depoimentos</span>
+      <h2 class="section-title">O que dizem sobre o trabalho</h2>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <p class="dep-text">O dashboard de pneus transformou nossa operação. Antes levávamos horas para saber o status de cada filial — agora é em segundos, com gráficos e filtros que qualquer um consegue usar.</p>
+        <div class="dep-author">
+          <div class="dep-avatar">MR</div>
+          <div>
+            <div class="dep-name">Marcelo Rodrigues</div>
+            <div class="dep-role-text">Gerente de Frota – Cia Verde</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <p class="dep-text">A automação via WhatsApp reduziu zero erros de comunicação entre as filiais. A integração com o Google Sheets foi cirúrgica — nada de sistemas caros.</p>
+        <div class="dep-author">
+          <div class="dep-avatar">PT</div>
+          <div>
+            <div class="dep-name">Paulo Teixeira</div>
+            <div class="dep-role-text">Coord. Operacional – Blumenau</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <p class="dep-text">O Gabriel entregou em dias algo que qualquer ERP levaria meses para customizar — e funcionou na primeira semana de uso.</p>
+        <div class="dep-author">
+          <div class="dep-avatar">CS</div>
+          <div>
+            <div class="dep-name">Carla Souza</div>
+            <div class="dep-role-text">Diretora Financeira – Cia Verde</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contato" id="contato">
+  <div class="contato-inner">
+    <div class="contato-info">
+      <span class="section-eyebrow">Contato</span>
+      <h2>Fale comigo!</h2>
+      <p>Tem um projeto de logística, frota ou ferramenta digital em mente? Vamos conversar sobre como construir algo que realmente funcione para sua operação.</p>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
         <div>
-            <div class="p-6 flex items-center space-x-3 border-b border-gray-800">
-                <i class="fa-solid fa-chart-pie text-xl text-hubspot-orange"></i>
-                <span class="font-bold text-white tracking-wide text-sm">LERNER CRM</span>
-            </div>
-            <nav class="p-4 space-y-1">
-                <a href="#" class="flex items-center space-x-3 bg-hubspot-dark text-white px-4 py-3 rounded-lg text-sm font-medium transition">
-                    <i class="fa-solid fa-house w-5"></i> <span>Dashboard</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 hover:bg-hubspot-dark hover:text-white px-4 py-3 rounded-lg text-sm font-medium transition">
-                    <i class="fa-solid fa-address-book w-5"></i> <span>Contatos / Leads</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 hover:bg-hubspot-dark hover:text-white px-4 py-3 rounded-lg text-sm font-medium transition">
-                    <i class="fa-solid fa-briefcase w-5"></i> <span>Processos (Deals)</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 hover:bg-hubspot-dark hover:text-white px-4 py-3 rounded-lg text-sm font-medium transition">
-                    <i class="fa-solid fa-robot w-5"></i> <span>Automações / n8n</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 hover:bg-hubspot-dark hover:text-white px-4 py-3 rounded-lg text-sm font-medium transition">
-                    <i class="fa-solid fa-file-invoice-dollar w-5"></i> <span>Faturamento</span>
-                </a>
-            </nav>
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-val">(41) 99999-0000</div>
         </div>
-        <div class="p-4 border-t border-gray-800 flex items-center space-x-3">
-            <div class="w-9 h-9 bg-hubspot-orange rounded-full flex items-center justify-center text-white font-bold text-sm">GL</div>
-            <div class="text-xs">
-                <p class="text-white font-semibold">Gabriel Lerner</p>
-                <p class="text-gray-500">Admin Geral</p>
-            </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">E-mail</div>
+          <div class="contact-val">gabriel@ciaverde.com.br</div>
         </div>
-    </aside>
-
-    <main class="flex-1 flex flex-col overflow-y-auto">
-        <header class="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center shrink-0">
-            <div class="flex items-center space-x-4">
-                <h1 class="text-xl font-bold text-gray-800">Visão Geral</h1>
-                <span class="text-xs bg-green-100 text-green-800 font-semibold px-2 py-1 rounded">Webhook Ativo</span>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <input type="text" placeholder="Buscar no CRM..." class="bg-gray-50 border border-gray-300 text-sm rounded-lg px-4 py-2 w-64 focus:outline-none focus:border-hubspot-orange">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-gray-400 text-xs"></i>
-                </div>
-                <button class="bg-hubspot-orange text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition">+ Criar Lead</button>
-            </div>
-        </header>
-
-        <div class="p-8 space-y-8 flex-1">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-2">
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Novos Contatos (Mês)</p>
-                    <div class="flex items-baseline space-x-2">
-                        <span class="text-3xl font-bold text-gray-800">142</span>
-                        <span class="text-green-600 text-xs font-bold"><i class="fa-solid fa-arrow-up"></i> +12%</span>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-2">
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Ações em Andamento</p>
-                    <div class="flex items-baseline space-x-2">
-                        <span class="text-3xl font-bold text-gray-800">48</span>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-2">
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Taxa de Conversão</p>
-                    <div class="flex items-baseline space-x-2">
-                        <span class="text-3xl font-bold text-gray-800">24.3%</span>
-                        <span class="text-red-500 text-xs font-bold"><i class="fa-solid fa-arrow-down"></i> -1.5%</span>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-2">
-                    <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider">Mensagens Disparadas (n8n)</p>
-                    <div class="flex items-baseline space-x-2">
-                        <span class="text-3xl font-bold text-gray-800">1,840</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
-                <h3 class="font-bold text-gray-800 text-base">Pipeline de Contratos (Kanban Simplificado)</h3>
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div class="bg-gray-50 p-4 rounded-lg space-y-3">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Contato Inicial (5)</span>
-                        <div class="bg-white p-4 rounded-md shadow-sm border-l-4 border-blue-500 space-y-2">
-                            <h4 class="font-bold text-sm text-gray-800">Indústria Ferro Velho Ltda</h4>
-                            <p class="text-xs text-gray-500">Área: Trabalhista</p>
-                        </div>
-                        <div class="bg-white p-4 rounded-md shadow-sm border-l-4 border-blue-500 space-y-2">
-                            <h4 class="font-bold text-sm text-gray-800">Carlos Eduardo Rezende</h4>
-                            <p class="text-xs text-gray-500">Área: Cível</p>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg space-y-3">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Proposta Enviada (2)</span>
-                        <div class="bg-white p-4 rounded-md shadow-sm border-l-4 border-orange-500 space-y-2">
-                            <h4 class="font-bold text-sm text-gray-800">Construtora Aliança</h4>
-                            <p class="text-xs text-gray-500">Área: Empresarial</p>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg space-y-3">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Fechamento / Assinatura (3)</span>
-                        <div class="bg-white p-4 rounded-md shadow-sm border-l-4 border-green-500 space-y-2">
-                            <h4 class="font-bold text-sm text-gray-800">Partido Municipal Araucária</h4>
-                            <p class="text-xs text-gray-500">Área: Eleitoral</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Localização</div>
+          <div class="contact-val">Curitiba, PR — Brasil</div>
         </div>
-    </main>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-row">
+          <input type="text" placeholder="Seu nome">
+          <input type="text" placeholder="Empresa">
+        </div>
+        <input type="email" placeholder="E-mail">
+        <input type="text" placeholder="Assunto">
+        <textarea placeholder="Descreva seu projeto ou necessidade..."></textarea>
+        <button class="btn-submit">Enviar mensagem →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Gabriel Lerner</div>
+  <div class="footer-copy">© 2026 Gabriel Lerner · Curitiba, PR · Todos os direitos reservados</div>
+  <div class="footer-socials">
+    <a class="social-btn" href="#">in</a>
+    <a class="social-btn" href="#">ig</a>
+    <a class="social-btn" href="#">gh</a>
+  </div>
+</footer>
+
 </body>
 </html>
