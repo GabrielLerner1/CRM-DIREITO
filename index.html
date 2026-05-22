@@ -3,342 +3,863 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gabriel Lerner | Especialista em Logística & Tecnologia</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>GL CRM – Gabriel Lerner</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --ink: #0d1117; --gold: #c9a84c; --gold-light: #e8c97e; --cream: #f8f5ef; --mid: #6b7280; --white: #ffffff; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #f4f6f8;
+  --sidebar: #1a1f2e;
+  --sidebar-hover: rgba(255,255,255,0.07);
+  --gold: #c9a84c;
+  --gold-light: #e8c97e;
+  --white: #ffffff;
+  --ink: #111827;
+  --mid: #6b7280;
+  --light: #e5e7eb;
+  --accent-blue: #3b82f6;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+  --border: #e5e7eb;
+  --card: #ffffff;
+  --topbar: #ffffff;
+}
+html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); overflow: hidden; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; background: rgba(13,17,23,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); }
-  .nav-logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--gold); }
+/* ===== LAYOUT ===== */
+.app { display: flex; height: 100vh; }
 
-  .hero { min-height: 100vh; background: var(--ink); display: flex; align-items: center; position: relative; overflow: hidden; padding: 8rem 4rem 4rem; }
-  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 60%); }
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; color: var(--gold); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; }
-  .hero-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--gold); }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.75rem); line-height: 1.15; color: var(--white); margin-bottom: 1.5rem; }
-  .hero h1 em { font-style: italic; color: var(--gold); }
-  .hero p { color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2.5rem; max-width: 500px; }
-  .hero-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--gold); color: var(--ink); padding: 0.9rem 2rem; font-weight: 600; font-size: 0.9rem; text-decoration: none; letter-spacing: 0.05em; transition: all 0.25s; }
-  .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
-  .hero-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2); padding: 2.5rem; width: 100%; max-width: 380px; margin: 0 auto; }
-  .hero-stat { margin-bottom: 1.5rem; }
-  .hero-stat:last-child { margin-bottom: 0; }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--gold); display: block; }
-  .stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.25rem; }
-  .divider-gold { height: 1px; background: rgba(201,168,76,0.2); margin: 1.25rem 0; }
+/* ===== SIDEBAR ===== */
+.sidebar { width: 220px; min-width: 220px; background: var(--sidebar); display: flex; flex-direction: column; overflow: hidden; }
+.sidebar-logo { padding: 1.25rem 1.25rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.logo-text { font-size: 1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+.logo-sub { font-size: 0.68rem; color: rgba(255,255,255,0.35); margin-top: 0.1rem; }
+.sidebar-nav { flex: 1; padding: 0.75rem 0; overflow-y: auto; }
+.nav-group-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 1rem 1.25rem 0.4rem; }
+.nav-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.55rem 1.25rem; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 0.82rem; font-weight: 500; border-left: 2px solid transparent; transition: all 0.15s; text-decoration: none; }
+.nav-item:hover { background: var(--sidebar-hover); color: rgba(255,255,255,0.9); }
+.nav-item.active { background: rgba(201,168,76,0.12); color: var(--gold); border-left-color: var(--gold); }
+.nav-item .icon { font-size: 1rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
+.nav-badge { margin-left: auto; background: var(--accent-red); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 999px; }
+.sidebar-footer { padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 0.65rem; }
+.user-ava { width: 2rem; height: 2rem; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--sidebar); flex-shrink: 0; }
+.user-info { min-width: 0; }
+.user-name { font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-role { font-size: 0.65rem; color: rgba(255,255,255,0.35); }
 
-  section { padding: 6rem 4rem; }
-  .section-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; color: var(--gold); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
-  .section-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--gold); }
-  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.2; margin-bottom: 1.25rem; }
+/* ===== MAIN ===== */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: var(--topbar); border-bottom: 1px solid var(--border); padding: 0 1.5rem; height: 52px; display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+.topbar-title { font-size: 1rem; font-weight: 700; flex: 1; }
+.topbar-search { display: flex; align-items: center; gap: 0.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.75rem; width: 220px; }
+.topbar-search input { border: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 0.82rem; outline: none; width: 100%; color: var(--ink); }
+.topbar-search input::placeholder { color: var(--mid); }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
+.btn-primary { background: var(--gold); color: var(--sidebar); }
+.btn-primary:hover { background: var(--gold-light); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg); }
+.icon-btn { width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; color: var(--mid); font-size: 1rem; transition: all 0.15s; }
+.icon-btn:hover { background: var(--bg); color: var(--ink); }
 
-  .sobre { background: var(--white); }
-  .sobre-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-  .sobre-img-wrap { position: relative; }
-  .sobre-img-placeholder { width: 100%; padding-bottom: 115%; background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); position: relative; overflow: hidden; }
-  .sobre-img-placeholder::after { content: 'GL'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: rgba(201,168,76,0.15); }
-  .sobre-accent { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 6rem; height: 6rem; background: var(--gold); z-index: 2; }
-  .sobre-text p { color: var(--mid); line-height: 1.8; margin-bottom: 1.25rem; }
-  .sobre-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-  .tag { border: 1px solid rgba(201,168,76,0.4); color: var(--gold); padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; }
+/* ===== CONTENT ===== */
+.content { flex: 1; overflow-y: auto; padding: 1.5rem; }
 
-  .atuacao { background: var(--cream); }
-  .atuacao-inner { max-width: 1200px; margin: 0 auto; }
-  .atuacao-header { margin-bottom: 3.5rem; }
-  .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-  .service-card { background: var(--white); padding: 2.25rem 1.75rem; border-bottom: 3px solid transparent; transition: all 0.25s; }
-  .service-card:hover { border-bottom-color: var(--gold); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
-  .card-icon { width: 3rem; height: 3rem; background: rgba(201,168,76,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; font-size: 1.5rem; }
-  .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.75rem; }
-  .service-card p { color: var(--mid); font-size: 0.875rem; line-height: 1.65; }
+/* ===== PAGE: DASHBOARD ===== */
+.page { display: none; }
+.page.active { display: block; }
+.page-header { margin-bottom: 1.25rem; }
+.page-header h2 { font-size: 1.25rem; font-weight: 700; }
+.page-header p { color: var(--mid); font-size: 0.82rem; margin-top: 0.2rem; }
 
-  .equipe { background: var(--ink); }
-  .equipe .section-title { color: var(--white); }
-  .equipe-inner { max-width: 1200px; margin: 0 auto; }
-  .equipe-header { margin-bottom: 3.5rem; }
-  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-  .team-photo { width: 100%; padding-bottom: 120%; background: linear-gradient(135deg, #1a2535, #0d1117); position: relative; }
-  .team-photo-initial { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: rgba(201,168,76,0.3); }
-  .team-info { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-top: 2px solid var(--gold); padding: 1.25rem; }
-  .team-info h3 { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.25rem; }
-  .team-role { color: var(--gold); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-  .team-bio { color: rgba(255,255,255,0.45); font-size: 0.8rem; line-height: 1.5; }
+/* KPI CARDS */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+.kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.25rem; }
+.kpi-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.kpi-label { font-size: 0.75rem; font-weight: 600; color: var(--mid); text-transform: uppercase; letter-spacing: 0.05em; }
+.kpi-icon { width: 2rem; height: 2rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.kpi-val { font-size: 1.6rem; font-weight: 700; line-height: 1; margin-bottom: 0.3rem; }
+.kpi-change { font-size: 0.75rem; font-weight: 500; }
+.kpi-change.up { color: var(--accent-green); }
+.kpi-change.down { color: var(--accent-red); }
 
-  .depoimentos { background: var(--white); }
-  .depoimentos-inner { max-width: 1200px; margin: 0 auto; }
-  .dep-header { margin-bottom: 3.5rem; }
-  .dep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-  .dep-card { padding: 2rem; background: var(--cream); position: relative; }
-  .dep-card::before { content: '\201C'; position: absolute; top: 1rem; left: 1.5rem; font-family: 'Playfair Display', serif; font-size: 5rem; line-height: 1; color: var(--gold); opacity: 0.3; }
-  .dep-text { color: var(--ink); line-height: 1.75; font-size: 0.9rem; margin-bottom: 1.5rem; padding-top: 2rem; }
-  .dep-author { display: flex; align-items: center; gap: 0.75rem; }
-  .dep-avatar { width: 2.5rem; height: 2.5rem; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--ink); font-size: 0.85rem; }
-  .dep-name { font-weight: 600; font-size: 0.875rem; }
-  .dep-role-text { color: var(--mid); font-size: 0.78rem; }
+/* GRID 2COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.three-col { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.25rem; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.card-title { font-size: 0.85rem; font-weight: 700; }
+.card-action { font-size: 0.75rem; color: var(--gold); cursor: pointer; font-weight: 600; }
 
-  .contato { background: var(--cream); }
-  .contato-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
-  .contato-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1.25rem; }
-  .contato-info p { color: var(--mid); line-height: 1.75; margin-bottom: 2rem; }
-  .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
-  .contact-icon { width: 2.5rem; height: 2.5rem; min-width: 2.5rem; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--ink); }
-  .contact-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
-  .contact-val { font-weight: 500; margin-top: 0.15rem; }
-  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .contact-form input, .contact-form textarea { border: 1px solid rgba(0,0,0,0.12); background: var(--white); padding: 0.875rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; width: 100%; }
-  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
-  .contact-form textarea { min-height: 120px; resize: vertical; }
-  .btn-submit { background: var(--ink); color: var(--white); border: none; padding: 0.9rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; transition: all 0.25s; align-self: flex-start; }
-  .btn-submit:hover { background: var(--gold); color: var(--ink); }
+/* MINI CHART (bars) */
+.mini-chart { display: flex; align-items: flex-end; gap: 4px; height: 60px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.bar { width: 100%; border-radius: 3px 3px 0 0; transition: all 0.3s; cursor: pointer; }
+.bar:hover { opacity: 0.75; }
+.bar-label { font-size: 0.55rem; color: var(--mid); }
 
-  footer { background: var(--ink); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(201,168,76,0.15); }
-  .footer-logo { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.1rem; font-weight: 700; }
-  .footer-copy { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
-  .footer-socials { display: flex; gap: 1rem; }
-  .social-btn { width: 2rem; height: 2rem; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; transition: all 0.2s; }
-  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+/* PIPELINE */
+.pipeline-row { display: flex; gap: 1px; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 0.6rem; }
+.pipe-seg { height: 100%; transition: flex 0.5s; }
+.pipe-legend { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.pipe-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--mid); }
+.pipe-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+/* ACTIVITY FEED */
+.activity-feed { display: flex; flex-direction: column; gap: 0; }
+.activity-item { display: flex; gap: 0.75rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border); }
+.activity-item:last-child { border-bottom: none; }
+.act-ava { width: 1.75rem; height: 1.75rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 0.1rem; }
+.act-text { font-size: 0.78rem; line-height: 1.5; color: var(--ink); }
+.act-text strong { font-weight: 600; }
+.act-time { font-size: 0.68rem; color: var(--mid); margin-top: 0.15rem; }
+
+/* ===== TABLE ===== */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+thead th { padding: 0.65rem 0.9rem; text-align: left; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mid); border-bottom: 1px solid var(--border); background: #f9fafb; }
+tbody td { padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #f9fafb; }
+.td-name { font-weight: 600; }
+.td-company { color: var(--mid); font-size: 0.75rem; }
+.badge { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.68rem; font-weight: 600; }
+.badge-green { background: #d1fae5; color: #065f46; }
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-orange { background: #fef3c7; color: #92400e; }
+.badge-red { background: #fee2e2; color: #991b1b; }
+.badge-gray { background: #f3f4f6; color: var(--mid); }
+.badge-purple { background: #ede9fe; color: #5b21b6; }
+.action-dots { cursor: pointer; color: var(--mid); font-size: 1rem; padding: 0.25rem 0.5rem; border-radius: 4px; }
+.action-dots:hover { background: var(--bg); color: var(--ink); }
+
+/* ===== KANBAN ===== */
+.kanban { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; }
+.kanban-col { min-width: 220px; background: #f3f4f6; border-radius: 8px; padding: 0.75rem; flex-shrink: 0; }
+.kanban-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.kanban-col-title { font-size: 0.78rem; font-weight: 700; }
+.kanban-count { background: var(--border); color: var(--mid); font-size: 0.65rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 999px; }
+.kanban-card { background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem; margin-bottom: 0.6rem; cursor: pointer; transition: all 0.15s; }
+.kanban-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
+.kc-name { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem; }
+.kc-company { font-size: 0.72rem; color: var(--mid); margin-bottom: 0.5rem; }
+.kc-val { font-size: 0.75rem; font-weight: 700; color: var(--accent-green); }
+.kc-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+.kc-ava { width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: #fff; }
+.kc-date { font-size: 0.65rem; color: var(--mid); }
+.add-card-btn { width: 100%; background: transparent; border: 1px dashed var(--border); border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; color: var(--mid); cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+.add-card-btn:hover { background: var(--white); color: var(--ink); border-color: var(--gold); }
+
+/* ===== TASKS ===== */
+.task-list { display: flex; flex-direction: column; gap: 0; }
+.task-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+.task-item:last-child { border-bottom: none; }
+.task-cb { width: 1rem; height: 1rem; border: 2px solid var(--border); border-radius: 3px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.task-cb.done { background: var(--accent-green); border-color: var(--accent-green); color: #fff; font-size: 0.6rem; }
+.task-text { flex: 1; }
+.task-text.done { text-decoration: line-through; color: var(--mid); }
+.task-due { font-size: 0.7rem; color: var(--mid); }
+.task-due.overdue { color: var(--accent-red); font-weight: 600; }
+.task-badge { font-size: 0.65rem; }
+
+/* ===== MODAL ===== */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: none; align-items: center; justify-content: center; }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--white); border-radius: 10px; width: 480px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+.modal-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 0.95rem; font-weight: 700; }
+.modal-close { cursor: pointer; color: var(--mid); font-size: 1.25rem; line-height: 1; }
+.modal-close:hover { color: var(--ink); }
+.modal-body { padding: 1.5rem; }
+.form-group { margin-bottom: 1rem; }
+.form-label { font-size: 0.75rem; font-weight: 600; color: var(--ink); display: block; margin-bottom: 0.4rem; }
+.form-input { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 0.55rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 0.82rem; outline: none; transition: border-color 0.15s; }
+.form-input:focus { border-color: var(--gold); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 0.5rem; }
+
+/* ===== CONTACTS ===== */
+.contacts-toolbar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.contacts-search { flex: 1; display: flex; align-items: center; gap: 0.5rem; background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.85rem; }
+.contacts-search input { border: none; outline: none; font-size: 0.82rem; font-family: 'Inter', sans-serif; width: 100%; }
+.filter-btn { display: flex; align-items: center; gap: 0.4rem; border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.85rem; background: var(--white); font-size: 0.78rem; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--ink); }
+.filter-btn:hover { background: var(--bg); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">★ Gabriel Lerner</div>
-  <ul class="nav-links">
-    <li><a href="#inicio">Início</a></li>
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#atuacao">Atuação</a></li>
-    <li><a href="#equipe">Equipe</a></li>
-    <li><a href="#contato">Contato</a></li>
-  </ul>
-</nav>
+<div class="app">
 
-<section class="hero" id="inicio">
-  <div class="hero-grid">
-    <div>
-      <span class="hero-eyebrow">Logística & Tecnologia</span>
-      <h1>Soluções digitais com <em>precisão</em> e resultado.</h1>
-      <p>Desenvolvimento de ferramentas internas, dashboards de gestão e plataformas digitais para logística e frota — com foco em dados reais e impacto operacional.</p>
-      <a href="#contato" class="hero-cta">Fale comigo →</a>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">GL CRM</div>
+      <div class="logo-sub">Gabriel Lerner</div>
     </div>
-    <div style="display:flex;justify-content:center;">
-      <div class="hero-card">
-        <div class="hero-stat">
-          <span class="stat-num">8+</span>
-          <div class="stat-label">Filiais monitoradas em tempo real</div>
-        </div>
-        <div class="divider-gold"></div>
-        <div class="hero-stat">
-          <span class="stat-num">100%</span>
-          <div class="stat-label">Dashboards customizados para Cia Verde</div>
-        </div>
-        <div class="divider-gold"></div>
-        <div class="hero-stat">
-          <span class="stat-num">0</span>
-          <div class="stat-label">Dependência de sistemas caros e genéricos</div>
-        </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Principal</div>
+      <a class="nav-item active" onclick="showPage('dashboard',this)">
+        <span class="icon">📊</span> Dashboard
+      </a>
+      <a class="nav-item" onclick="showPage('contacts',this)">
+        <span class="icon">👥</span> Contatos
+      </a>
+      <a class="nav-item" onclick="showPage('pipeline',this)">
+        <span class="icon">🏗️</span> Pipeline
+      </a>
+      <a class="nav-item" onclick="showPage('tasks',this)">
+        <span class="icon">✅</span> Tarefas
+        <span class="nav-badge">3</span>
+      </a>
+      <div class="nav-group-label">Vendas</div>
+      <a class="nav-item" onclick="showPage('deals',this)">
+        <span class="icon">💰</span> Negócios
+      </a>
+      <a class="nav-item" onclick="showPage('emails',this)">
+        <span class="icon">✉️</span> E-mails
+        <span class="nav-badge">7</span>
+      </a>
+      <div class="nav-group-label">Relatórios</div>
+      <a class="nav-item" onclick="showPage('reports',this)">
+        <span class="icon">📈</span> Relatórios
+      </a>
+      <a class="nav-item" onclick="showPage('settings',this)">
+        <span class="icon">⚙️</span> Configurações
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-ava">GL</div>
+      <div class="user-info">
+        <div class="user-name">Gabriel Lerner</div>
+        <div class="user-role">Admin</div>
       </div>
     </div>
-  </div>
-</section>
+  </aside>
 
-<section class="sobre" id="sobre">
-  <div class="sobre-inner">
-    <div class="sobre-img-wrap">
-      <div class="sobre-img-placeholder"></div>
-      <div class="sobre-accent"></div>
-    </div>
-    <div class="sobre-text">
-      <span class="section-eyebrow">Sobre mim</span>
-      <h2 class="section-title">Tecnologia aplicada à logística real</h2>
-      <p>Gabriel Lerner é especialista em desenvolvimento de ferramentas digitais para gestão de frota e logística, com atuação direta na Cia Verde Logística. Constrói sistemas internos sob medida — dashboards, rastreadores e plataformas de controle — que substituem planilhas manuais por dados acionáveis.</p>
-      <p>Com foco em soluções de baixo custo e alta eficiência, usa tecnologias como Google Sheets como banco de dados, HTML/JS/CSS para interfaces web e integrações via WhatsApp e automações n8n. Cada ferramenta é pensada para quem opera na ponta.</p>
-      <div class="sobre-tags">
-        <span class="tag">Dashboards de Frota</span>
-        <span class="tag">Google Sheets API</span>
-        <span class="tag">Gestão de Pneus</span>
-        <span class="tag">Automação n8n</span>
-        <span class="tag">Cia Verde Logística</span>
-        <span class="tag">WhatsApp Integration</span>
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-search">
+        <span style="color:var(--mid);font-size:0.9rem;">🔍</span>
+        <input type="text" placeholder="Buscar contato, negócio...">
       </div>
+      <button class="btn btn-ghost" onclick="openModal()">+ Novo Contato</button>
+      <button class="btn btn-primary" onclick="openDealModal()">+ Negócio</button>
+      <div class="icon-btn">🔔</div>
     </div>
-  </div>
-</section>
 
-<section class="atuacao" id="atuacao">
-  <div class="atuacao-inner">
-    <div class="atuacao-header">
-      <span class="section-eyebrow">Especialidades</span>
-      <h2 class="section-title">Atuação nas principais frentes digitais</h2>
-    </div>
-    <div class="cards-grid">
-      <div class="service-card">
-        <div class="card-icon">📊</div>
-        <h3>Dashboards de Gestão</h3>
-        <p>Painéis interativos com filtros, gráficos e tabelas para monitoramento de frota, pneus, orçamentos e KPIs operacionais em tempo real.</p>
-      </div>
-      <div class="service-card">
-        <div class="card-icon">🚚</div>
-        <h3>Controle de Frota</h3>
-        <p>Sistemas de rastreamento de ativos, controle de calibragem, sucateamento e reforma de pneus por filial com histórico completo.</p>
-      </div>
-      <div class="service-card">
-        <div class="card-icon">⚙️</div>
-        <h3>Automação de Processos</h3>
-        <p>Integração de fluxos via n8n, Google Apps Script e WhatsApp — eliminando tarefas manuais repetitivas e acelerando a operação.</p>
-      </div>
-      <div class="service-card">
-        <div class="card-icon">🏗️</div>
-        <h3>Plataformas Digitais</h3>
-        <p>Desenvolvimento de apps web completos com hospedagem zero-cost e escalabilidade real para o mercado brasileiro.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="content">
 
-<section class="equipe" id="equipe">
-  <div class="equipe-inner">
-    <div class="equipe-header">
-      <span class="section-eyebrow">Time</span>
-      <h2 class="section-title">Conheça quem faz acontecer</h2>
-    </div>
-    <div class="team-grid">
-      <div>
-        <div class="team-photo"><div class="team-photo-initial">GL</div></div>
-        <div class="team-info">
-          <h3>Gabriel Lerner</h3>
-          <div class="team-role">Líder de Tecnologia</div>
-          <p class="team-bio">Responsável pela arquitetura de todas as ferramentas digitais e integração de sistemas.</p>
+      <!-- ===== DASHBOARD ===== -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-header">
+          <h2>Visão Geral</h2>
+          <p>Bem-vindo de volta, Gabriel. Aqui está o resumo de hoje.</p>
         </div>
-      </div>
-      <div>
-        <div class="team-photo"><div class="team-photo-initial">BZ</div></div>
-        <div class="team-info">
-          <h3>Beatriz</h3>
-          <div class="team-role">Parceira Estratégica</div>
-          <p class="team-bio">Suporte na definição de fluxos e experiência de usuário para as plataformas desenvolvidas.</p>
-        </div>
-      </div>
-      <div>
-        <div class="team-photo"><div class="team-photo-initial">OP</div></div>
-        <div class="team-info">
-          <h3>Equipe Operação</h3>
-          <div class="team-role">Cia Verde – Filiais</div>
-          <p class="team-bio">Usuários e validadores dos sistemas em campo — garantindo aderência real às ferramentas.</p>
-        </div>
-      </div>
-      <div>
-        <div class="team-photo"><div class="team-photo-initial">TI</div></div>
-        <div class="team-info">
-          <h3>Suporte TI</h3>
-          <div class="team-role">Infraestrutura</div>
-          <p class="team-bio">Gestão de acessos, Google Workspace e manutenção dos ambientes de dados.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="depoimentos">
-  <div class="depoimentos-inner">
-    <div class="dep-header">
-      <span class="section-eyebrow">Depoimentos</span>
-      <h2 class="section-title">O que dizem sobre o trabalho</h2>
-    </div>
-    <div class="dep-grid">
-      <div class="dep-card">
-        <p class="dep-text">O dashboard de pneus transformou nossa operação. Antes levávamos horas para saber o status de cada filial — agora é em segundos, com gráficos e filtros que qualquer um consegue usar.</p>
-        <div class="dep-author">
-          <div class="dep-avatar">MR</div>
-          <div>
-            <div class="dep-name">Marcelo Rodrigues</div>
-            <div class="dep-role-text">Gerente de Frota – Cia Verde</div>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="kpi-top">
+              <div class="kpi-label">Contatos</div>
+              <div class="kpi-icon" style="background:#dbeafe;">👥</div>
+            </div>
+            <div class="kpi-val" style="color:var(--accent-blue);">284</div>
+            <div class="kpi-change up">▲ 12 este mês</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-top">
+              <div class="kpi-label">Negócios Abertos</div>
+              <div class="kpi-icon" style="background:#d1fae5;">💼</div>
+            </div>
+            <div class="kpi-val" style="color:var(--accent-green);">47</div>
+            <div class="kpi-change up">▲ 5 novas</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-top">
+              <div class="kpi-label">Receita Pipeline</div>
+              <div class="kpi-icon" style="background:#fef3c7;">💰</div>
+            </div>
+            <div class="kpi-val" style="color:var(--accent-orange);">R$ 318k</div>
+            <div class="kpi-change up">▲ R$ 24k</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-top">
+              <div class="kpi-label">Taxa de Conversão</div>
+              <div class="kpi-icon" style="background:#ede9fe;">📈</div>
+            </div>
+            <div class="kpi-val" style="color:var(--accent-purple);">34%</div>
+            <div class="kpi-change down">▼ 2% vs mês</div>
+          </div>
+        </div>
+
+        <div class="three-col">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Negócios por Mês</div>
+              <div class="card-action">Ver tudo</div>
+            </div>
+            <div class="mini-chart" id="barChart"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Pipeline Status</div>
+            </div>
+            <div class="pipeline-row">
+              <div class="pipe-seg" style="flex:3;background:#3b82f6;"></div>
+              <div class="pipe-seg" style="flex:4;background:#c9a84c;"></div>
+              <div class="pipe-seg" style="flex:2;background:#10b981;"></div>
+              <div class="pipe-seg" style="flex:1;background:#ef4444;"></div>
+            </div>
+            <div class="pipe-legend">
+              <div class="pipe-item"><div class="pipe-dot" style="background:#3b82f6;"></div>Prospecção (30%)</div>
+              <div class="pipe-item"><div class="pipe-dot" style="background:#c9a84c;"></div>Negociação (40%)</div>
+              <div class="pipe-item"><div class="pipe-dot" style="background:#10b981;"></div>Fechado (20%)</div>
+              <div class="pipe-item"><div class="pipe-dot" style="background:#ef4444;"></div>Perdido (10%)</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Metas</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.3rem;"><span>Contatos Novos</span><span style="font-weight:700;">12/20</span></div>
+                <div style="height:6px;background:var(--border);border-radius:3px;"><div style="height:100%;width:60%;background:var(--accent-blue);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.3rem;"><span>Negócios Fechados</span><span style="font-weight:700;">8/15</span></div>
+                <div style="height:6px;background:var(--border);border-radius:3px;"><div style="height:100%;width:53%;background:var(--accent-green);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.3rem;"><span>Receita (R$)</span><span style="font-weight:700;">318k/500k</span></div>
+                <div style="height:6px;background:var(--border);border-radius:3px;"><div style="height:100%;width:63%;background:var(--gold);border-radius:3px;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Negócios Recentes</div>
+              <div class="card-action" onclick="showPage('deals',document.querySelector('[onclick*=deals]'))">Ver todos</div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Contato</th><th>Estágio</th><th>Valor</th></tr></thead>
+                <tbody>
+                  <tr><td><div class="td-name">Cia Verde Logística</div><div class="td-company">Gestão de Frota</div></td><td><span class="badge badge-green">Fechado</span></td><td style="font-weight:700;color:var(--accent-green);">R$ 48.000</td></tr>
+                  <tr><td><div class="td-name">JurisLog Adv.</div><div class="td-company">Plataforma SaaS</div></td><td><span class="badge badge-blue">Proposta</span></td><td style="font-weight:700;">R$ 12.000</td></tr>
+                  <tr><td><div class="td-name">Logtech Sul</div><div class="td-company">Dashboard</div></td><td><span class="badge badge-orange">Negociação</span></td><td style="font-weight:700;">R$ 8.500</td></tr>
+                  <tr><td><div class="td-name">Frota Express</div><div class="td-company">Automação n8n</div></td><td><span class="badge badge-gray">Prospecção</span></td><td style="font-weight:700;">R$ 5.200</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Atividade Recente</div>
+            </div>
+            <div class="activity-feed">
+              <div class="activity-item">
+                <div class="act-ava" style="background:var(--accent-blue);">GL</div>
+                <div><div class="act-text"><strong>Gabriel</strong> fechou o negócio com <strong>Cia Verde</strong> — R$ 48k</div><div class="act-time">Há 2h</div></div>
+              </div>
+              <div class="activity-item">
+                <div class="act-ava" style="background:var(--accent-green);">BZ</div>
+                <div><div class="act-text"><strong>Beatriz</strong> adicionou nota em <strong>JurisLog</strong></div><div class="act-time">Há 3h</div></div>
+              </div>
+              <div class="activity-item">
+                <div class="act-ava" style="background:var(--gold);">GL</div>
+                <div><div class="act-text"><strong>Gabriel</strong> enviou proposta para <strong>Logtech Sul</strong></div><div class="act-time">Hoje, 09:15</div></div>
+              </div>
+              <div class="activity-item">
+                <div class="act-ava" style="background:var(--accent-purple);">PT</div>
+                <div><div class="act-text"><strong>Paulo T.</strong> agendou reunião com <strong>Frota Express</strong></div><div class="act-time">Ontem, 17:40</div></div>
+              </div>
+              <div class="activity-item">
+                <div class="act-ava" style="background:var(--accent-orange);">GL</div>
+                <div><div class="act-text"><strong>Gabriel</strong> criou contato <strong>Felipe Martins</strong> (Logtech Sul)</div><div class="act-time">Ontem, 14:22</div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="dep-card">
-        <p class="dep-text">A automação via WhatsApp reduziu zero erros de comunicação entre as filiais. A integração com o Google Sheets foi cirúrgica — nada de sistemas caros.</p>
-        <div class="dep-author">
-          <div class="dep-avatar">PT</div>
-          <div>
-            <div class="dep-name">Paulo Teixeira</div>
-            <div class="dep-role-text">Coord. Operacional – Blumenau</div>
+
+      <!-- ===== CONTACTS ===== -->
+      <div class="page" id="page-contacts">
+        <div class="page-header">
+          <h2>Contatos</h2>
+          <p>Gerencie seus leads e clientes</p>
+        </div>
+        <div class="contacts-toolbar">
+          <div class="contacts-search">
+            <span style="color:var(--mid);">🔍</span>
+            <input type="text" placeholder="Buscar por nome, empresa, email...">
+          </div>
+          <button class="filter-btn">🔽 Filtrar</button>
+          <button class="filter-btn">⬇ Exportar</button>
+          <button class="btn btn-primary" onclick="openModal()">+ Novo Contato</button>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nome</th><th>Empresa</th><th>Email</th><th>Telefone</th><th>Status</th><th>Responsável</th><th></th></tr></thead>
+              <tbody id="contactsTable">
+                <tr><td><div class="td-name">Marcelo Rodrigues</div></td><td>Cia Verde Logística</td><td>m.rodrigues@ciaverde.com.br</td><td>(41) 98844-1100</td><td><span class="badge badge-green">Cliente</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Paulo Teixeira</div></td><td>Cia Verde – Blumenau</td><td>paulo.t@ciaverde.com.br</td><td>(47) 97722-3300</td><td><span class="badge badge-green">Cliente</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Carla Souza</div></td><td>Cia Verde Logística</td><td>carla.s@ciaverde.com.br</td><td>(41) 99911-2200</td><td><span class="badge badge-green">Cliente</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Felipe Martins</div></td><td>Logtech Sul</td><td>f.martins@logtechsul.com.br</td><td>(51) 98800-4411</td><td><span class="badge badge-orange">Negociação</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Ana Lima</div></td><td>JurisLog Advocacia</td><td>ana@jurislog.com.br</td><td>(41) 99700-5500</td><td><span class="badge badge-blue">Lead</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Roberto Faria</div></td><td>Frota Express</td><td>r.faria@frotaexpress.com.br</td><td>(41) 98600-7700</td><td><span class="badge badge-gray">Prospecção</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Juliana Neves</div></td><td>TransSul Logística</td><td>j.neves@transsul.com.br</td><td>(48) 98500-8800</td><td><span class="badge badge-gray">Prospecção</span></td><td>Beatriz</td><td><span class="action-dots">···</span></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div class="dep-card">
-        <p class="dep-text">O Gabriel entregou em dias algo que qualquer ERP levaria meses para customizar — e funcionou na primeira semana de uso.</p>
-        <div class="dep-author">
-          <div class="dep-avatar">CS</div>
-          <div>
-            <div class="dep-name">Carla Souza</div>
-            <div class="dep-role-text">Diretora Financeira – Cia Verde</div>
+
+      <!-- ===== PIPELINE ===== -->
+      <div class="page" id="page-pipeline">
+        <div class="page-header">
+          <h2>Pipeline de Vendas</h2>
+          <p>Arraste os cards entre etapas para atualizar</p>
+        </div>
+        <div class="kanban">
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">🔵 Prospecção</div>
+              <span class="kanban-count">3</span>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">Frota Express</div>
+              <div class="kc-company">Automação n8n</div>
+              <div class="kc-val">R$ 5.200</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-orange);">GL</div>
+                <div class="kc-date">Próx: 25 mai</div>
+              </div>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">TransSul Logística</div>
+              <div class="kc-company">Dashboard KPI</div>
+              <div class="kc-val">R$ 9.800</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-purple);">BZ</div>
+                <div class="kc-date">Próx: 28 mai</div>
+              </div>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">Via Sul Transportes</div>
+              <div class="kc-company">Sistema de Pneus</div>
+              <div class="kc-val">R$ 15.000</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--gold);">GL</div>
+                <div class="kc-date">Próx: 02 jun</div>
+              </div>
+            </div>
+            <button class="add-card-btn">+ Adicionar negócio</button>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">🟡 Proposta</div>
+              <span class="kanban-count">2</span>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">JurisLog Adv.</div>
+              <div class="kc-company">Plataforma SaaS</div>
+              <div class="kc-val">R$ 12.000</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-blue);">GL</div>
+                <div class="kc-date">Próx: 23 mai</div>
+              </div>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">Porto Seco Sul</div>
+              <div class="kc-company">Controle de Estoque</div>
+              <div class="kc-val">R$ 22.000</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-green);">GL</div>
+                <div class="kc-date">Próx: 30 mai</div>
+              </div>
+            </div>
+            <button class="add-card-btn">+ Adicionar negócio</button>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">🟠 Negociação</div>
+              <span class="kanban-count">2</span>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">Logtech Sul</div>
+              <div class="kc-company">Dashboard Frota</div>
+              <div class="kc-val">R$ 8.500</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-orange);">GL</div>
+                <div class="kc-date">Próx: 24 mai</div>
+              </div>
+            </div>
+            <div class="kanban-card">
+              <div class="kc-name">Araucária Logística</div>
+              <div class="kc-company">Integração WhatsApp</div>
+              <div class="kc-val">R$ 6.800</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-purple);">BZ</div>
+                <div class="kc-date">Próx: 26 mai</div>
+              </div>
+            </div>
+            <button class="add-card-btn">+ Adicionar negócio</button>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">🟢 Fechado</div>
+              <span class="kanban-count">1</span>
+            </div>
+            <div class="kanban-card" style="border-left:3px solid var(--accent-green);">
+              <div class="kc-name">Cia Verde Logística</div>
+              <div class="kc-company">Gestão de Frota Completa</div>
+              <div class="kc-val">R$ 48.000</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-green);">GL</div>
+                <div class="kc-date">Fechado: 20 mai</div>
+              </div>
+            </div>
+            <button class="add-card-btn">+ Adicionar negócio</button>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">🔴 Perdido</div>
+              <span class="kanban-count">1</span>
+            </div>
+            <div class="kanban-card" style="border-left:3px solid var(--accent-red);opacity:0.75;">
+              <div class="kc-name">Nordeste Frete</div>
+              <div class="kc-company">App mobile</div>
+              <div class="kc-val" style="color:var(--accent-red);">R$ 18.000</div>
+              <div class="kc-footer">
+                <div class="kc-ava" style="background:var(--accent-red);">GL</div>
+                <div class="kc-date">Perdido: 15 mai</div>
+              </div>
+            </div>
+            <button class="add-card-btn">+ Adicionar negócio</button>
           </div>
         </div>
       </div>
+
+      <!-- ===== TASKS ===== -->
+      <div class="page" id="page-tasks">
+        <div class="page-header">
+          <h2>Tarefas</h2>
+          <p>Suas pendências e atividades programadas</p>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">📌 Pendentes</div>
+              <button class="btn btn-primary" style="font-size:0.72rem;padding:0.35rem 0.75rem;">+ Tarefa</button>
+            </div>
+            <div class="task-list">
+              <div class="task-item">
+                <div class="task-cb" onclick="toggleTask(this)"></div>
+                <div class="task-text">Enviar contrato para Logtech Sul</div>
+                <div class="task-due overdue">Hoje</div>
+                <span class="badge badge-orange task-badge">Urgente</span>
+              </div>
+              <div class="task-item">
+                <div class="task-cb" onclick="toggleTask(this)"></div>
+                <div class="task-text">Reunião de kickoff com JurisLog</div>
+                <div class="task-due">23 mai</div>
+                <span class="badge badge-blue task-badge">Reunião</span>
+              </div>
+              <div class="task-item">
+                <div class="task-cb" onclick="toggleTask(this)"></div>
+                <div class="task-text">Preparar demo do dashboard de pneus</div>
+                <div class="task-due">25 mai</div>
+                <span class="badge badge-purple task-badge">Demo</span>
+              </div>
+              <div class="task-item">
+                <div class="task-cb" onclick="toggleTask(this)"></div>
+                <div class="task-text">Follow-up com Porto Seco Sul</div>
+                <div class="task-due">28 mai</div>
+                <span class="badge badge-gray task-badge">Follow-up</span>
+              </div>
+              <div class="task-item">
+                <div class="task-cb" onclick="toggleTask(this)"></div>
+                <div class="task-text">Atualizar proposta para Araucária Logística</div>
+                <div class="task-due">30 mai</div>
+                <span class="badge badge-gray task-badge">Proposta</span>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">✅ Concluídas</div>
+            </div>
+            <div class="task-list">
+              <div class="task-item">
+                <div class="task-cb done" onclick="toggleTask(this)">✓</div>
+                <div class="task-text done">Fechar contrato Cia Verde</div>
+                <div class="task-due">20 mai</div>
+              </div>
+              <div class="task-item">
+                <div class="task-cb done" onclick="toggleTask(this)">✓</div>
+                <div class="task-text done">Enviar proposta inicial para JurisLog</div>
+                <div class="task-due">19 mai</div>
+              </div>
+              <div class="task-item">
+                <div class="task-cb done" onclick="toggleTask(this)">✓</div>
+                <div class="task-text done">Apresentação para Logtech Sul</div>
+                <div class="task-due">18 mai</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== DEALS ===== -->
+      <div class="page" id="page-deals">
+        <div class="page-header">
+          <h2>Negócios</h2>
+          <p>Todos os negócios e oportunidades</p>
+        </div>
+        <div class="contacts-toolbar">
+          <div class="contacts-search">
+            <span style="color:var(--mid);">🔍</span>
+            <input type="text" placeholder="Buscar negócio...">
+          </div>
+          <button class="filter-btn">🔽 Filtrar</button>
+          <button class="btn btn-primary" onclick="openDealModal()">+ Novo Negócio</button>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Negócio</th><th>Empresa</th><th>Valor</th><th>Estágio</th><th>Fechamento</th><th>Responsável</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><div class="td-name">Gestão de Frota Completa</div></td><td>Cia Verde Logística</td><td style="font-weight:700;color:var(--accent-green);">R$ 48.000</td><td><span class="badge badge-green">Fechado</span></td><td>20/05/2026</td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Plataforma SaaS Jurídica</div></td><td>JurisLog Adv.</td><td style="font-weight:700;">R$ 12.000</td><td><span class="badge badge-blue">Proposta</span></td><td>30/05/2026</td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Controle de Estoque</div></td><td>Porto Seco Sul</td><td style="font-weight:700;">R$ 22.000</td><td><span class="badge badge-blue">Proposta</span></td><td>15/06/2026</td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Dashboard Frota</div></td><td>Logtech Sul</td><td style="font-weight:700;">R$ 8.500</td><td><span class="badge badge-orange">Negociação</span></td><td>10/06/2026</td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Integração WhatsApp</div></td><td>Araucária Logística</td><td style="font-weight:700;">R$ 6.800</td><td><span class="badge badge-orange">Negociação</span></td><td>20/06/2026</td><td>Beatriz</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">Sistema de Pneus</div></td><td>Via Sul Transportes</td><td style="font-weight:700;">R$ 15.000</td><td><span class="badge badge-gray">Prospecção</span></td><td>30/06/2026</td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+                <tr><td><div class="td-name">App Mobile</div></td><td>Nordeste Frete</td><td style="font-weight:700;color:var(--mid);text-decoration:line-through;">R$ 18.000</td><td><span class="badge badge-red">Perdido</span></td><td>—</td><td>Gabriel L.</td><td><span class="action-dots">···</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EMAILS ===== -->
+      <div class="page" id="page-emails">
+        <div class="page-header">
+          <h2>E-mails</h2>
+          <p>Comunicações com leads e clientes</p>
+        </div>
+        <div class="card" style="padding:2rem;text-align:center;color:var(--mid);">
+          <div style="font-size:2.5rem;margin-bottom:0.75rem;">✉️</div>
+          <div style="font-weight:600;margin-bottom:0.5rem;">Módulo de E-mail</div>
+          <div style="font-size:0.85rem;">Conecte sua conta Gmail ou Outlook para visualizar e enviar e-mails diretamente do CRM.</div>
+          <button class="btn btn-primary" style="margin-top:1.25rem;">Conectar Gmail</button>
+        </div>
+      </div>
+
+      <!-- ===== REPORTS ===== -->
+      <div class="page" id="page-reports">
+        <div class="page-header">
+          <h2>Relatórios</h2>
+          <p>Análise de desempenho e vendas</p>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="kpi-top"><div class="kpi-label">Receita Fechada</div><div class="kpi-icon" style="background:#d1fae5;">💰</div></div>
+            <div class="kpi-val" style="color:var(--accent-green);">R$ 48k</div>
+            <div class="kpi-change up">▲ Maio 2026</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-top"><div class="kpi-label">Em Negociação</div><div class="kpi-icon" style="background:#fef3c7;">⚡</div></div>
+            <div class="kpi-val" style="color:var(--accent-orange);">R$ 270k</div>
+            <div class="kpi-change up">Pipeline ativo</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-top"><div class="kpi-label">Ticket Médio</div><div class="kpi-icon" style="background:#ede9fe;">📊</div></div>
+            <div class="kpi-val" style="color:var(--accent-purple);">R$ 17,4k</div>
+            <div class="kpi-change up">▲ 8% vs trim.</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-top"><div class="kpi-label">Ciclo de Venda</div><div class="kpi-icon" style="background:#dbeafe;">⏱</div></div>
+            <div class="kpi-val" style="color:var(--accent-blue);">18 dias</div>
+            <div class="kpi-change down">▼ 3 dias melhor</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Receita por Mês (2026)</div></div>
+          <div class="mini-chart" id="reportChart" style="height:80px;"></div>
+        </div>
+      </div>
+
+      <!-- ===== SETTINGS ===== -->
+      <div class="page" id="page-settings">
+        <div class="page-header">
+          <h2>Configurações</h2>
+          <p>Personalize seu CRM</p>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Perfil</div></div>
+            <div class="form-group"><label class="form-label">Nome</label><input class="form-input" value="Gabriel Lerner"></div>
+            <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" value="gabriel@ciaverde.com.br"></div>
+            <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" value="Cia Verde Logística"></div>
+            <div class="form-group"><label class="form-label">Cargo</label><input class="form-input" value="Especialista em Tecnologia"></div>
+            <button class="btn btn-primary">Salvar alterações</button>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Integrações</div></div>
+            <div class="task-list">
+              <div class="task-item"><span style="flex:1;font-size:0.82rem;">📊 Google Sheets</span><span class="badge badge-green">Conectado</span></div>
+              <div class="task-item"><span style="flex:1;font-size:0.82rem;">📱 WhatsApp (Evolution API)</span><span class="badge badge-green">Conectado</span></div>
+              <div class="task-item"><span style="flex:1;font-size:0.82rem;">⚙️ n8n Cloud</span><span class="badge badge-green">Conectado</span></div>
+              <div class="task-item"><span style="flex:1;font-size:0.82rem;">✉️ Gmail</span><span class="badge badge-gray">Desconectado</span></div>
+              <div class="task-item"><span style="flex:1;font-size:0.82rem;">📅 Google Calendar</span><span class="badge badge-gray">Desconectado</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- MODAL NOVO CONTATO -->
+<div class="modal-backdrop" id="contactModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Novo Contato</div>
+      <span class="modal-close" onclick="closeModal()">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Nome *</label><input class="form-input" placeholder="Nome completo"></div>
+        <div class="form-group"><label class="form-label">Sobrenome</label><input class="form-input" placeholder="Sobrenome"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" placeholder="Nome da empresa"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" type="email" placeholder="email@empresa.com"></div>
+        <div class="form-group"><label class="form-label">Telefone</label><input class="form-input" placeholder="(00) 00000-0000"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-input">
+          <option>Prospecção</option><option>Lead</option><option>Negociação</option><option>Cliente</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Notas</label><textarea class="form-input" rows="3" placeholder="Observações sobre o contato..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveContact()">Salvar Contato</button>
     </div>
   </div>
-</section>
+</div>
 
-<section class="contato" id="contato">
-  <div class="contato-inner">
-    <div class="contato-info">
-      <span class="section-eyebrow">Contato</span>
-      <h2>Fale comigo!</h2>
-      <p>Tem um projeto de logística, frota ou ferramenta digital em mente? Vamos conversar sobre como construir algo que realmente funcione para sua operação.</p>
-      <div class="contact-item">
-        <div class="contact-icon">📱</div>
-        <div>
-          <div class="contact-label">WhatsApp</div>
-          <div class="contact-val">(41) 99999-0000</div>
-        </div>
+<!-- MODAL NOVO NEGÓCIO -->
+<div class="modal-backdrop" id="dealModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Novo Negócio</div>
+      <span class="modal-close" onclick="closeDealModal()">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Nome do Negócio *</label><input class="form-input" placeholder="Ex: Dashboard de Pneus – Cia Verde"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" placeholder="Empresa"></div>
+        <div class="form-group"><label class="form-label">Valor (R$)</label><input class="form-input" type="number" placeholder="0,00"></div>
       </div>
-      <div class="contact-item">
-        <div class="contact-icon">✉️</div>
-        <div>
-          <div class="contact-label">E-mail</div>
-          <div class="contact-val">gabriel@ciaverde.com.br</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Estágio</label>
+          <select class="form-input">
+            <option>Prospecção</option><option>Proposta</option><option>Negociação</option><option>Fechado</option>
+          </select>
         </div>
+        <div class="form-group"><label class="form-label">Previsão de Fechamento</label><input class="form-input" type="date"></div>
       </div>
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div>
-          <div class="contact-label">Localização</div>
-          <div class="contact-val">Curitiba, PR — Brasil</div>
-        </div>
+      <div class="form-group"><label class="form-label">Responsável</label>
+        <select class="form-input"><option>Gabriel Lerner</option><option>Beatriz</option></select>
       </div>
     </div>
-    <div>
-      <div class="contact-form">
-        <div class="form-row">
-          <input type="text" placeholder="Seu nome">
-          <input type="text" placeholder="Empresa">
-        </div>
-        <input type="email" placeholder="E-mail">
-        <input type="text" placeholder="Assunto">
-        <textarea placeholder="Descreva seu projeto ou necessidade..."></textarea>
-        <button class="btn-submit">Enviar mensagem →</button>
-      </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeDealModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="closeDealModal()">Criar Negócio</button>
     </div>
   </div>
-</section>
+</div>
 
-<footer>
-  <div class="footer-logo">Gabriel Lerner</div>
-  <div class="footer-copy">© 2026 Gabriel Lerner · Curitiba, PR · Todos os direitos reservados</div>
-  <div class="footer-socials">
-    <a class="social-btn" href="#">in</a>
-    <a class="social-btn" href="#">ig</a>
-    <a class="social-btn" href="#">gh</a>
-  </div>
-</footer>
+<script>
+// NAV
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  const titles = {dashboard:'Dashboard',contacts:'Contatos',pipeline:'Pipeline',tasks:'Tarefas',deals:'Negócios',emails:'E-mails',reports:'Relatórios',settings:'Configurações'};
+  document.getElementById('topbarTitle').textContent = titles[id] || id;
+}
 
+// MODALS
+function openModal() { document.getElementById('contactModal').classList.add('open'); }
+function closeModal() { document.getElementById('contactModal').classList.remove('open'); }
+function openDealModal() { document.getElementById('dealModal').classList.add('open'); }
+function closeDealModal() { document.getElementById('dealModal').classList.remove('open'); }
+document.querySelectorAll('.modal-backdrop').forEach(m => {
+  m.addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('open'); } });
+});
+
+// SAVE CONTACT (demo)
+function saveContact() {
+  const inputs = document.querySelectorAll('#contactModal .form-input');
+  const nome = inputs[0].value.trim();
+  if (!nome) { inputs[0].style.borderColor = 'var(--accent-red)'; return; }
+  const tbody = document.getElementById('contactsTable');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><div class="td-name">${nome} ${inputs[1].value}</div></td><td>${inputs[2].value||'—'}</td><td>${inputs[3].value||'—'}</td><td>${inputs[4].value||'—'}</td><td><span class="badge badge-gray">${inputs[5].value}</span></td><td>Gabriel L.</td><td><span class="action-dots">···</span></td>`;
+  tbody.prepend(tr);
+  closeModal();
+  document.querySelectorAll('#contactModal .form-input').forEach(i => i.value = '');
+}
+
+// TASKS
+function toggleTask(el) {
+  el.classList.toggle('done');
+  if (el.classList.contains('done')) el.textContent = '✓';
+  else el.textContent = '';
+  const text = el.nextElementSibling;
+  if (text) text.classList.toggle('done');
+}
+
+// MINI BARS
+function buildBars(containerId, data, color) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const max = Math.max(...data.map(d => d.v));
+  container.innerHTML = data.map(d => `
+    <div class="bar-wrap">
+      <div class="bar" style="height:${Math.round((d.v/max)*100)}%;background:${color};"></div>
+      <div class="bar-label">${d.l}</div>
+    </div>`).join('');
+}
+
+buildBars('barChart', [
+  {l:'Jan',v:3},{l:'Fev',v:5},{l:'Mar',v:4},{l:'Abr',v:8},{l:'Mai',v:12},
+  {l:'Jun',v:7},{l:'Jul',v:9},{l:'Ago',v:6},{l:'Set',v:10},{l:'Out',v:8},{l:'Nov',v:5},{l:'Dez',v:3}
+], 'var(--gold)');
+
+buildBars('reportChart', [
+  {l:'Jan',v:8},{l:'Fev',v:22},{l:'Mar',v:15},{l:'Abr',v:35},{l:'Mai',v:48}
+], 'var(--accent-green)');
+</script>
 </body>
 </html>
