@@ -16,6 +16,14 @@ const DIAS = {
   0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6,
 };
 
+function getHoraBRT() {
+  const agora = new Date();
+  const horaBRT = new Date(agora.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+  const hh = String(horaBRT.getHours()).padStart(2, '0');
+  const mm = String(horaBRT.getMinutes()).padStart(2, '0');
+  return { horaAtual: `${hh}:${mm}`, diaAtual: horaBRT.getDay(), horaBRT };
+}
+
 async function enviarWhatsApp(phone, message) {
   const numero = phone.replace(/\D/g, '');
   const url = `${EVOLUTION_URL}/message/sendText/${EVOLUTION_INSTANCE}`;
@@ -37,10 +45,8 @@ async function registrarLog(msgId, status, erro = null) {
 }
 
 async function verificarEDisparar() {
-  const agora = new Date();
-  const horaAtual = agora.toTimeString().slice(0, 5);
-  const diaAtual = agora.getDay();
-  console.log(`[${agora.toISOString()}] Verificando agendamentos — ${horaAtual} dia ${diaAtual}`);
+  const { horaAtual, diaAtual, horaBRT } = getHoraBRT();
+  console.log(`[${new Date().toISOString()}] Verificando agendamentos — ${horaAtual} BRT dia ${diaAtual}`);
 
   const { data: msgs, error } = await supabase
     .from('scheduled_messages')
@@ -48,18 +54,15 @@ async function verificarEDisparar() {
     .eq('active', true);
 
   if (error) { console.error('Erro ao buscar agendamentos:', error.message); return; }
+  if (!msgs || msgs.length === 0) { console.log('Nenhum agendamento ativo.'); return; }
+
+  console.log(`  ${msgs.length} agendamento(s) ativo(s) encontrado(s)`);
 
   for (const msg of msgs) {
     try {
-      const { data: contato } = await supabase
-        .from('contacts')
-        .select('phone, name')
-        .eq('id', msg.contact_id)
-        .single();
-
-      msg.contacts = contato;
-
       const horaMensagem = msg.send_time?.slice(0, 5);
+      console.log(`  Checando msg ${msg.id} — agendada: ${horaMensagem} | agora: ${horaAtual}`);
+
       if (horaMensagem !== horaAtual) continue;
 
       const dias = msg.days_of_week
@@ -67,27 +70,38 @@ async function verificarEDisparar() {
         .map(d => DIAS[d.trim().toLowerCase()])
         .filter(d => d !== undefined);
 
+      console.log(`  Dias configurados: ${JSON.stringify(dias)} | dia hoje: ${diaAtual}`);
+
       if (!dias || !dias.includes(diaAtual)) continue;
       if (msg.one_time && msg.sent_once) continue;
 
-      const phone = msg.contacts?.phone;
-      if (!phone) { console.warn(`Contato sem telefone — msg ID ${msg.id}`); continue; }
+      const { data: contato } = await supabase
+        .from('contacts')
+        .select('phone, name')
+        .eq('id', msg.contact_id)
+        .single();
 
-      console.log(`→ Disparando para ${msg.contacts.name} (${phone})`);
+      const phone = contato?.phone;
+      if (!phone) { console.warn(`  ⚠️ Contato sem telefone — msg ID ${msg.id}`); continue; }
+
+      console.log(`  → Disparando para ${contato.name} (${phone})`);
       const resultado = await enviarWhatsApp(phone, msg.message);
       console.log('  Resultado:', JSON.stringify(resultado));
 
       await registrarLog(msg.id, 'sent');
 
       if (msg.one_time) {
-        await supabase.from('scheduled_messages').update({ sent_once: true, active: false }).eq('id', msg.id);
+        await supabase
+          .from('scheduled_messages')
+          .update({ sent_once: true, active: false })
+          .eq('id', msg.id);
       }
     } catch (err) {
-      console.error(`Erro ao processar msg ID ${msg.id}:`, err.message);
+      console.error(`  Erro ao processar msg ID ${msg.id}:`, err.message);
       await registrarLog(msg.id, 'error', err.message);
     }
   }
 }
 
 cron.schedule('* * * * *', verificarEDisparar);
-console.log('✅ Scheduler iniciado — verificando a cada minuto');
+console.log('✅ Scheduler iniciado — verificando a cada minuto (timezone: America/Sao_Paulo)');
