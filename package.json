@@ -1,0 +1,14 @@
+{
+  "name": "crm-scheduler",
+  "version": "1.0.0",
+  "description": "Worker de agendamento de mensagens WhatsApp",
+  "main": "scheduler.js",
+  "scripts": {
+    "start": "node scheduler.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^2.7.0"
+  }
+}
