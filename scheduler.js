@@ -2,7 +2,6 @@ const cron = require('node-cron');
 const { createClient } = require('@supabase/supabase-js');
 const fetch = require('node-fetch');
 
-// ── Configurações ──────────────────────────────────────────────
 const SUPABASE_URL = 'https://cgwwagojwhnwgcvanpbp.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const EVOLUTION_URL = 'https://evolution-api-production-5b7e.up.railway.app';
@@ -41,18 +40,25 @@ async function verificarEDisparar() {
   const agora = new Date();
   const horaAtual = agora.toTimeString().slice(0, 5);
   const diaAtual = agora.getDay();
-
   console.log(`[${agora.toISOString()}] Verificando agendamentos — ${horaAtual} dia ${diaAtual}`);
 
   const { data: msgs, error } = await supabase
     .from('scheduled_messages')
-    .select(`id, message, send_time, days_of_week, one_time, sent_once, contacts (phone, name)`)
+    .select('id, message, send_time, days_of_week, one_time, sent_once, contact_id')
     .eq('active', true);
 
   if (error) { console.error('Erro ao buscar agendamentos:', error.message); return; }
 
   for (const msg of msgs) {
     try {
+      const { data: contato } = await supabase
+        .from('contacts')
+        .select('phone, name')
+        .eq('id', msg.contact_id)
+        .single();
+
+      msg.contacts = contato;
+
       const horaMensagem = msg.send_time?.slice(0, 5);
       if (horaMensagem !== horaAtual) continue;
 
