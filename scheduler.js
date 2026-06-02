@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const SUPABASE_URL = 'https://cgwwagojwhnwgcvanpbp.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const EVOLUTION_URL = 'https://evolution-api-production-5b7e.up.railway.app';
-const EVOLUTION_INSTANCE = 'teste';
+const EVOLUTION_INSTANCE = 'teste2';
 const EVOLUTION_APIKEY = 'mude-me';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
