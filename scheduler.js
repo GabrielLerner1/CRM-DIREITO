@@ -30,7 +30,7 @@ async function enviarWhatsApp(phone, message) {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'apikey': EVOLUTION_APIKEY },
-    body: JSON.stringify({ number: numero, text: message }),
+    body: JSON.stringify({ number: numero, textMessage: { text: message } }),
   });
   return await res.json();
 }
@@ -45,7 +45,7 @@ async function registrarLog(msgId, status, erro = null) {
 }
 
 async function verificarEDisparar() {
-  const { horaAtual, diaAtual, horaBRT } = getHoraBRT();
+  const { horaAtual, diaAtual } = getHoraBRT();
   console.log(`[${new Date().toISOString()}] Verificando agendamentos — ${horaAtual} BRT dia ${diaAtual}`);
 
   const { data: msgs, error } = await supabase
