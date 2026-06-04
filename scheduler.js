@@ -23,9 +23,9 @@ function getHoraBRT() {
   const dataHoje = `${horaBRT.getFullYear()}-${String(horaBRT.getMonth()+1).padStart(2,'0')}-${String(horaBRT.getDate()).padStart(2,'0')}`;
   return {
     horaAtual: `${hh}:${mm}`,
-    diaAtual: horaBRT.getDay(),        // 0=dom ... 6=sab
-    diaDoMes: horaBRT.getDate(),       // 1-31
-    dataHoje,                          // 'YYYY-MM-DD'
+    diaAtual: horaBRT.getDay(),
+    diaDoMes: horaBRT.getDate(),
+    dataHoje,
   };
 }
 
@@ -68,23 +68,33 @@ async function verificarEDisparar() {
       const horaMensagem = msg.send_time?.slice(0, 5);
       if (horaMensagem !== horaAtual) continue;
 
-      // ── Determinar se deve disparar hoje ──────────────────────────────
       let deveDisparar = false;
       let motivo = '';
 
+      // Normaliza scheduled_date para 'YYYY-MM-DD' independente do formato
+      const scheduledDate = msg.scheduled_date
+        ? String(msg.scheduled_date).slice(0, 10)
+        : null;
+
+      console.log(`  msg ${msg.id} | one_time: ${msg.one_time} | scheduled_date: ${scheduledDate} | days_of_week: ${msg.days_of_week} | dataHoje: ${dataHoje}`);
+
       if (msg.one_time) {
-        // Data específica única (ex: só no dia 15/06/2026)
-        if (msg.sent_once) { console.log(`  ⏭ msg ${msg.id} já enviada (one_time)`); continue; }
-        if (msg.scheduled_date) {
-          deveDisparar = msg.scheduled_date === dataHoje;
-          motivo = `data única ${msg.scheduled_date}`;
+        if (msg.sent_once) {
+          console.log(`  ⏭ msg ${msg.id} já enviada (one_time)`);
+          continue;
+        }
+        if (scheduledDate) {
+          deveDisparar = scheduledDate === dataHoje;
+          motivo = `data única ${scheduledDate}`;
+        } else {
+          // one_time sem data = dispara hoje
+          deveDisparar = true;
+          motivo = 'one_time sem data — dispara hoje';
         }
       } else if (msg.day_of_month) {
-        // Todo dia X do mês (ex: todo dia 15)
         deveDisparar = msg.day_of_month === diaDoMes;
         motivo = `todo dia ${msg.day_of_month} do mês`;
       } else if (msg.days_of_week) {
-        // Dias da semana (ex: seg, qua, sex)
         const dias = msg.days_of_week
           .split(',')
           .map(d => DIAS[d.trim().toLowerCase()])
@@ -93,10 +103,9 @@ async function verificarEDisparar() {
         motivo = `dias da semana: ${msg.days_of_week}`;
       }
 
-      console.log(`  msg ${msg.id} | motivo: ${motivo} | dispara: ${deveDisparar}`);
+      console.log(`  → motivo: ${motivo} | dispara: ${deveDisparar}`);
       if (!deveDisparar) continue;
 
-      // ── Buscar contato ────────────────────────────────────────────────
       const { data: contato } = await supabase
         .from('contacts')
         .select('phone, name')
@@ -112,7 +121,6 @@ async function verificarEDisparar() {
 
       await registrarLog(msg.id, 'sent');
 
-      // Desativar se era envio único
       if (msg.one_time) {
         await supabase
           .from('scheduled_messages')
