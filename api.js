@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const app = express();
 
 const EVO_URL = 'https://evolution-api-production-5b7e.up.railway.app';
-const EVO_KEY = 'TESTE2';
+const EVO_KEY = 'mude-me';
 const EVO_INSTANCE = 'teste';
 const PORT = process.env.PORT || 3001;
 
